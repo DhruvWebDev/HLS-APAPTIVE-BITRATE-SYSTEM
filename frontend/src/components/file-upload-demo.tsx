@@ -1,35 +1,36 @@
-import { useState } from "react";
-import axios from "axios";
-import { FileUpload } from "./components/ui/file-upload";
-import { Button } from "./components/ui/button";
+import { useState } from "react"
+import { Button } from "./ui/button"
+import { FileUpload } from "./ui/file-upload"
+import axios from "axios"
 
-export default function App() {
-  const [videos, setVideos] = useState<File[]>([]);
+export default function FileUploadDemo() {
+  const [videos, setVideos] = useState<File[]>([])
 
   const handleVideoUpload = (files: File[]) => {
-    setVideos((prev) => [...prev, ...files]);
-    console.log("Videos uploaded:", files);
-  };
+    setVideos((prev) => [...prev, ...files])
+    console.log("Videos uploaded:", files)
+  }
 
   const uploadBulkVideo = async () => {
-    // Appending to FormData
-    const formData = new FormData();
-    videos.forEach((video: File) => {
-      formData.append("videos", video);
-    });
-
+    //Appending to form data
+    const formData = new FormData()
+    videos.forEach((video:File[]) => {
+      formData.append("videos", video)
+    }
+    )
     // Sending the form data to the server
+
     try {
-      const { data } = await axios.post("http://localhost:3000/upload", formData, {
+      const {data} = await axios.post("http://localhost:3000/upload", videos, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      });
-      console.log("Response:", data);
+      })
+      console.log("Response:", data)
     } catch (error) {
-      console.error("Error uploading videos:", error);
+      console.error("Error uploading videos:", error)
     }
-  };
+  }
 
   return (
     <div className="w-full max-w-4xl mx-auto min-h-96 border border-dashed bg-white dark:bg-black border-neutral-200 dark:border-neutral-800 rounded-lg">
@@ -39,7 +40,6 @@ export default function App() {
           Upload multiple video files at once. Supported formats: MP4, MOV, AVI, MKV, WebM
         </p>
 
-        {/* File Upload Component */}
         <FileUpload onChange={handleVideoUpload} accept="video/*" multiple={true} />
 
         {videos.length > 0 && (
@@ -50,10 +50,9 @@ export default function App() {
             </p>
           </div>
         )}
-
-        {/* Upload Button with onClick */}
-        <Button onClick={uploadBulkVideo} className="mt-4">Upload Bulk Video</Button>
+        <Button >Upload Bulk Video</Button>
       </div>
     </div>
-  );
+  )
 }
+

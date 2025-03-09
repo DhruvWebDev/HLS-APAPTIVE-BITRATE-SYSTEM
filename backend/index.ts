@@ -1,12 +1,13 @@
 import { S3Client, serve } from "bun";
 import dotenv from "dotenv";
-
+import multer from "multer";
+import multerS3 from "multer-s3";
 // AWS S3
 const s3 = new S3Client({
   accessKeyId: "AKIA6JKEXX26ORJAAJ7X",
   secretAccessKey: "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",
   bucket: "deploifybuildfile",
-   endpoint: "https://s3.eu-north-1.amazonaws.com",
+  endpoint: "https://s3.eu-north-1.amazonaws.com",
   // region: "us-east-1",
 });
 
@@ -18,7 +19,7 @@ async function handleUpload(req) {
     }
     return new Response(JSON.stringify({ message: "Files uploaded successfully!" }), { status: 200 });
   });
-}
+} 
 
 
 // Multer storage configuration
@@ -37,15 +38,15 @@ const upload = multer({
 
 
 const server = serve({
-	async fetch(req){
-		const path = new URL(req.url).pathname;
+  async fetch(req) {
+    const path = new URL(req.url).pathname;
 
-		if(path == "/upload"){
-			 return handleUpload(req);
-		}else if(path == "/"){
-			return new Response("Hello from server")
-		}
-	}
+    if (path == "/upload") {
+      return handleUpload(req);
+    } else if (path == "/") {
+      return new Response("Hello from server")
+    }
+  }
 })
 
 console.log(server.url)
