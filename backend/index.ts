@@ -2,10 +2,10 @@ import { S3Client, serve } from "bun";
 import dotenv from "dotenv";
 // AWS S3
 const s3 = new S3Client({
-  accessKeyId: "AKIA6JKEXX26ORJAAJ7X",
-  secretAccessKey: "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",
-  bucket: "deploifybuildfile",
-  endpoint: "https://s3.eu-north-1.amazonaws.com",
+  accessKeyId: "",
+  secretAccessKey: "",
+  bucket: "",
+  endpoint: "",
   // region: "us-east-1",
 });
 
