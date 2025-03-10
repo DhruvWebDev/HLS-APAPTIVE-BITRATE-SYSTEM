@@ -1,7 +1,5 @@
 import { S3Client, serve } from "bun";
 import dotenv from "dotenv";
-import multer from "multer";
-import multerS3 from "multer-s3";
 // AWS S3
 const s3 = new S3Client({
   accessKeyId: "AKIA6JKEXX26ORJAAJ7X",
@@ -12,41 +10,76 @@ const s3 = new S3Client({
 });
 
 
-async function handleUpload(req) {
-  upload.array("videos", 100)(req, {}, (err) => {
-    if (err) {
-      return new Response(JSON.stringify({ error: err.message }), { status: 500 });
+// ✅ Upload a File to S3
+async function uploadToS3(file: File): Promise<string> {
+  const buffer = await file.arrayBuffer(); // Convert File to ArrayBuffer
+  const fileName = `videos/${Date.now()}-${file.name}`;
+
+  const result = await s3.write(fileName, buffer);
+
+  return result.url; // Return the S3 file URL
+}
+
+// ✅ Handle File Uploads
+async function handleUpload(formData: FormData): Promise<string[]> {
+  const uploadedUrls: string[] = [];
+
+  for (const [_, file] of formData.entries()) {
+    if (file instanceof File) {
+      const url = await uploadToS3(file);
+      uploadedUrls.push(url);
     }
-    return new Response(JSON.stringify({ message: "Files uploaded successfully!" }), { status: 200 });
-  });
-} 
+  }
 
+  return uploadedUrls;
+}
 
-// Multer storage configuration
-const upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: "deploifybuildfile",
-    metadata: (req, file, cb) => {
-      cb(null, { fieldName: file.fieldname });
-    },
-    key: (req, file, cb) => {
-      cb(null, `videos/${Date.now()}-${file.originalname}`); // Store in 'videos/' folder
-    },
-  }),
-});
-
-
+// ✅ Start Bun Server
 const server = serve({
   async fetch(req) {
     const path = new URL(req.url).pathname;
 
-    if (path == "/upload") {
-      return handleUpload(req);
-    } else if (path == "/") {
-      return new Response("Hello from server")
+    // Handle CORS Preflight (OPTIONS request)
+    if (req.method === "OPTIONS") {
+      return new Response(null, {
+        status: 204,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type",
+        },
+      });
     }
-  }
-})
 
-console.log(server.url)
+    if (path === "/upload" && req.method === "POST") {
+      try {
+        const formData = await req.formData();
+        console.log("Received form data:", formData);
+
+        // Upload files
+        const uploadedUrls = await handleUpload(formData);
+
+        return new Response(JSON.stringify({ message: "Upload successful", urls: uploadedUrls }), {
+          status: 200,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+        });
+      } catch (error) {
+        console.error("Error uploading files:", error);
+        return new Response(JSON.stringify({ error: "Upload failed" }), {
+          status: 500,
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type": "application/json",
+          },
+        });
+      }
+    }
+
+    return new Response("Not Found", { status: 404 });
+  },
+});
+
+console.log("Server running on:", server.url);

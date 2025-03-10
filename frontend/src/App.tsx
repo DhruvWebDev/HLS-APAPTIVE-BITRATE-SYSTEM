@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
-import { FileUpload } from "./components/ui/file-upload";
-import { Button } from "./components/ui/button";
+import { FileUpload } from "@/components/ui/file-upload";
+import { Button } from "@/components/ui/button";
 
 export default function App() {
   const [videos, setVideos] = useState<File[]>([]);

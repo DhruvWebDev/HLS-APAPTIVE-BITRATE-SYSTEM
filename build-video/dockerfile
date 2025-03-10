@@ -1,0 +1,18 @@
+FROM node:18-alpine  
+
+WORKDIR /app  
+
+# Install AWS CLI  
+RUN apk add --no-cache aws-cli  
+
+# Install ffmpeg
+RUN apk add --no-cache ffmpeg
+
+# Copy script  
+COPY main.sh main.sh  
+
+# Ensure the script is executable  
+RUN chmod +x main.sh  
+
+# Set default command  
+CMD ["./main.sh"]
