@@ -5,10 +5,11 @@ dotenv.config();
 const s3 = new S3Client({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  bucket: process.env.S3_BUCKKET,
+  bucket: process.env.S3_BUCKET,
   endpoint: process.env.S3_BUCKET_ENDPOINT,
   region: process.env.AWS_REGION,
 });
+
 
 
 // ✅ Upload a File to S3
