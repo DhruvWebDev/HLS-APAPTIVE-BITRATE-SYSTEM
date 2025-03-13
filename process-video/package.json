@@ -1,0 +1,17 @@
+{
+  "name": "process-video",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@aws-sdk/client-ecs": "^3.758.0",
+    "@aws-sdk/client-sqs": "^3.758.0",
+    "dotenv": "^16.4.7"
+  }
+}

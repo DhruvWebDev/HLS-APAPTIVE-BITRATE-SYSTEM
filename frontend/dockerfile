@@ -1,0 +1,24 @@
+FROM oven/bun:latest as Builder
+
+WORKDIR /app
+
+COPY bun.lock .
+COPY package*.json .
+COPY tsconfig.json .
+
+RUN bun install
+
+COPY . .
+
+RUN bun build 
+
+FROM nginix:latest as Runner
+
+WORKDIR /usr/share/nginx/html
+RUN rm -rf ./*
+
+COPY --from=Builder /app/dist .
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

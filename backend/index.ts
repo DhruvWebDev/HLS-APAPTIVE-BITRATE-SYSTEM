@@ -1,12 +1,13 @@
 import { S3Client, serve } from "bun";
 import dotenv from "dotenv";
+dotenv.config();
 // AWS S3
 const s3 = new S3Client({
-  accessKeyId: "AKIA6JKEXX26ORJAAJ7X",
-  secretAccessKey: "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",
-  bucket: "deploifybuildfile",
-  endpoint: "https://s3.eu-north-1.amazonaws.com",
-  // region: "us-east-1",
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  bucket: process.env.S3_BUCKKET,
+  endpoint: process.env.S3_BUCKET_ENDPOINT,
+  region: process.env.AWS_REGION,
 });
 
 

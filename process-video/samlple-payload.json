@@ -1,0 +1,32 @@
+{
+  "Records": [
+    {
+      "eventVersion": "2.1",
+      "eventSource": "aws:s3",
+      "awsRegion": "eu-north-1",
+      "eventTime": "2025-03-10T14:31:39.960Z",
+      "eventName": "ObjectCreated:CompleteMultipartUpload",
+      "userIdentity": { "principalId": "A30O06CODLE82I" },
+      "requestParameters": { "sourceIPAddress": "103.179.171.129" },
+      "responseElements": {
+        "x-amz-request-id": "EM3R1WTN48EQ70ZK",
+        "x-amz-id-2": "TplzeSFfpHJ12wNLyez3Bd35I350JW5U5sJHSBwlvNmthN7ov9J4iyo30e/2Ig7G2IDs78SUnQ4SLWfK7aNJhFEb43RU+dF8lb6oDg8pzuU="
+      },
+      "s3": {
+        "s3SchemaVersion": "1.0",
+        "configurationId": "sqs",
+        "bucket": {
+          "name": "deploifybuildfile",
+          "ownerIdentity": { "principalId": "A30O06CODLE82I" },
+          "arn": "arn:aws:s3:::deploifybuildfile"
+        },
+        "object": {
+          "key": "videos/ffmpeg+package+_+Ubuntu+-+Google+Chrome+2025-03-09+12-55-44+-+Copy+%282%29.mp4",
+          "size": 30638454,
+          "eTag": "659cc8581c269c6abae2a67d94eaeac2-2",
+          "sequencer": "0067CEF78D5F083408"
+        }
+      }
+    }
+  ]
+}

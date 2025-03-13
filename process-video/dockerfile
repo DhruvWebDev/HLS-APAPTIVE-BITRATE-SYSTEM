@@ -1,0 +1,23 @@
+# Multi Stage Build for Bun to optimise the size of the docker image
+FROM oven/bun:latest AS builder 
+
+WORKDIR /app
+
+COPY bun.lock .
+COPY package*.json .
+COPY tsconfig.json .
+
+RUN bun install
+
+COPY . .
+
+RUN bun build --entrypoints ./index.ts --outdir ./build
+
+
+FROM oven/bun:latest AS runner
+
+WORKDIR /app
+
+COPY --from=Builder /app/build .
+
+CMD ["bun", "index.js"]

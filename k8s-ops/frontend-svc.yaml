@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  selector:
+    app: frontend   # Ensure that the pod selector matches the label of your frontend pods
+  ports:
+    - protocol: TCP
+      port: 80        # This is the port that the service will expose
+      targetPort: 80  # This is the port that your frontend application listens on inside the pod
+  type: ClusterIP    # The default service type, accessible only within the cluster

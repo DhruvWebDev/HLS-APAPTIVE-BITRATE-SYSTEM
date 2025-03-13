@@ -1,0 +1,14 @@
+# When you create a Service for a set of pods managed by a Deployment, the Service uses a selector to associate with the pods created by the Deployment
+# This service acts as a stable endpoint for accessing the backend application, providing load balancing and service discovery.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: backend  # This selector matches the backend Deployment pods
+  ports:
+    - protocol: TCP
+      port: 5000  # Port exposed by the service (external port)
+      targetPort: 5000  # The internal port in the backend container

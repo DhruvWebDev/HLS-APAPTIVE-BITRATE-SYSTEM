@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: process-video
+  labels:
+    app: process-video
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app:  process-video
+  template:
+    metadata:
+      labels:
+        app:  process-video
+    spec:
+      containers:
+      - name: process-video
+        image: process-video:latest
+        ports:
+        - containerPort: 80
