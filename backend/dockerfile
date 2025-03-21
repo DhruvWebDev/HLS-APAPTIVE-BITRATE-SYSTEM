@@ -1,5 +1,5 @@
 # Multi Stage Build for Bun to optimise the size of the docker image
-FROM oven/bun:latest as Builder 
+FROM oven/bun:latest AS Builder 
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ COPY . .
 
 RUN bun build ./index.ts --outdir ./build
 
-FROM oven/bun:latest as Runner
+FROM oven/bun:latest AS Runner
 
 COPY --from=Builder /app/build .
 

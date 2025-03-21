@@ -1,4 +1,4 @@
-FROM oven/bun:latest as Builder
+FROM oven/bun:latest AS Builder
 
 WORKDIR /app
 
@@ -10,9 +10,9 @@ RUN bun install
 
 COPY . .
 
-RUN bun build 
+RUN bun run build 
 
-FROM nginix:latest as Runner
+FROM nginx:latest AS Runner
 
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*

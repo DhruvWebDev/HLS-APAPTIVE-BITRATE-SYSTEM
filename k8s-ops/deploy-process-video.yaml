@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: process-video
-        image: process-video:latest
+        image: hls-apaptive-bitrate-system-process-video
         ports:
         - containerPort: 80

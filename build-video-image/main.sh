@@ -13,13 +13,6 @@ unset AWS_REGION
 export AWS_REGION="eu-north-1"
 
 
-# Verify AWS configuration
-echo "Verifying AWS credentials..."
-aws sts get-caller-identity || {
-    echo "AWS authentication failed. Check your credentials."
-    exit 1
-}
-
 # Download video file from S3
 echo "Downloading video file from S3..."
 aws s3 cp "s3://$S3_BUCKET/$INPUT_FILE" "./$INPUT_FILE" || {

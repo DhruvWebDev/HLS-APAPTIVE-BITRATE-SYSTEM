@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { FileUpload } from "@/components/ui/file-upload";
-import { Button } from "@/components/ui/button";
+import { FileUpload } from "./components/ui/file-upload";
 
 export default function App() {
   const [videos, setVideos] = useState<File[]>([]);
@@ -40,7 +39,7 @@ export default function App() {
         </p>
 
         {/* File Upload Component */}
-        <FileUpload onChange={handleVideoUpload} accept="video/*" multiple={true} />
+        <FileUpload onChange={handleVideoUpload} />
 
         {videos.length > 0 && (
           <div className="mt-6">
@@ -52,7 +51,7 @@ export default function App() {
         )}
 
         {/* Upload Button with onClick */}
-        <Button onClick={uploadBulkVideo} className="mt-4">Upload Bulk Video</Button>
+        <button onClick={uploadBulkVideo} className="mt-4">Upload Bulk Video</button>
       </div>
     </div>
   );

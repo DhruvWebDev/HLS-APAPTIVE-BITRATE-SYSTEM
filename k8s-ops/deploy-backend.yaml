@@ -5,10 +5,10 @@ metadata:
   labels:
     app: backend
 spec:
-  replicas: 3
+  replicas: 1  # Start with 1 replica for testing
   selector:
     matchLabels:
-    app: backend
+      app: backend
   template:
     metadata:
       labels:
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: backend:latest
+        image: hls-apaptive-bitrate-system-backend  # Must match local Docker image name
+        imagePullPolicy: Never  # 🚀 Prevents Kubernetes from pulling from Docker Hub
         ports:
         - containerPort: 80
-       

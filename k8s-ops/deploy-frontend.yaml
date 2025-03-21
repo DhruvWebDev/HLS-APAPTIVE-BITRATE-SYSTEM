@@ -17,6 +17,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: frontend:latest
+        image: hls-apaptive-bitrate-system-frontend
+        imagePullPolicy: Never  # 🚀 Prevents Kubernetes from pulling from Docker Hub
         ports:
         - containerPort: 80

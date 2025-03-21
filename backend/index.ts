@@ -1,8 +1,7 @@
-import { S3Client, serve } from "bun";
 import dotenv from "dotenv";
 dotenv.config();
 // AWS S3
-const s3 = new S3Client({
+const s3 = new Bun.S3Client({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   bucket: process.env.S3_BUCKET,
@@ -37,7 +36,7 @@ async function handleUpload(formData: FormData): Promise<string[]> {
 }
 
 // ✅ Start Bun Server
-const server = serve({
+const server = Bun.serve({
   async fetch(req) {
     const path = new URL(req.url).pathname;
 

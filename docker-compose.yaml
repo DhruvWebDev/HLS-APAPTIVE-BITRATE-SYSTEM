@@ -23,7 +23,7 @@ services:
       - ./frontend:/app
       - /app/node_modules
     ports:
-      - "3001:3001"
+      - "3001:80"
     networks:
       - app_network
 
@@ -35,8 +35,6 @@ services:
     volumes:
       - ./process-video:/app
       - /app/node_modules
-    ports:
-      - "3002:3002"
     networks:
       - app_network
 
@@ -60,7 +58,6 @@ networks:
 
 volumes:
   postgres_data:  # Define the named volume here
-
 
 # Todo Part 
 # Change the port
